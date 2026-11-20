@@ -10,7 +10,9 @@ from scripts.alignment_skill import (
     filename_score,
     has_abs,
     has_ineq,
+    in_topic_not_generated,
     item_matches,
+    question_form,
     section_slug_score,
     skill_profile,
 )
@@ -211,6 +213,48 @@ def main() -> None:
     assert section_slug_score("4-2-graph-linear-equations-in-two-variables", graph) > 0
     assert section_slug_score("10-5-graphing-quadratic-equations-in-two-variables", graph) == 0
     assert section_slug_score("1-3-add-and-subtract-integers", profile("Center and spread", "center_and_spread", ["Find the median of the data set."])) == 0
+
+    rect_topic = {"name": "Rectangles with fraction side lengths", "type_id": "g6_rectangles_with_fraction_side_lengths"}
+    rect_samples = [
+        {
+            "instruction_latex": r"\text{Find the area.}",
+            "prompt_latex": r"\text{Find the area of the rectangle with base } \frac{11}{8}\text{ cm} \text{ and height } \frac{4}{3}\text{ cm}.",
+            "error": None,
+        }
+    ]
+    rect_cards = [
+        {"text": "Find the unknown side length of the rectangle if its area is 11 m 2 . Check your answer by multiplying it by the given side length ( 3\\frac 23 )."},
+        {"text": "A television screen has length 16\\frac12 inches, width w inches, and area 462 square inches. Select all equations that represent the relationship of the side lengths and area."},
+        {"text": "The area of a rectangle is 17\\frac12 in 2 and its shorter side is 3\\frac12 in. What is the length of the longer side?"},
+        {"text": "It takes 1 1/4 minutes to fill a 3-gallon bucket with a hose."},
+    ]
+    gap = in_topic_not_generated(rect_topic, rect_samples, rect_cards)
+    assert "find the missing side given the area and one side" in gap["missing"], gap
+    assert any("select equations" in item for item in gap["missing"]), gap
+    assert "hose" not in gap["note"] and "gallon" not in gap["note"], gap["note"]
+    assert any("find the area given both side lengths" in item for item in gap["generated"]), gap
+
+    factor_gap = in_topic_not_generated(
+        {"name": "Quadratic factoring", "type_id": "quadratic_factoring"},
+        [{"instruction_latex": r"\text{Factor.}", "prompt_latex": r"x^{2} - 4", "error": None}],
+        [{"text": r"63 . $x^{2} + 4 x + 3$"}],
+    )
+    assert factor_gap["missing"] == [], factor_gap
+
+    abs_gap = in_topic_not_generated(
+        {"name": "Absolute value equations", "type_id": "absolute_value_equations"},
+        [{"instruction_latex": r"\text{Solve.}", "prompt_latex": r"\text{Solve: } \left|x - 1\right| = 2", "error": None}],
+        [{"text": r"438 . $\left|\right. 2 x - 3 \left|\right. - 4 = 1$"}],
+    )
+    assert abs_gap["missing"] == [], abs_gap
+    assert "none seen" in abs_gap["note"]
+    cong = question_form(
+        r"Prove the triangles are congruent. In right \triangle ABC and right \triangle DEF, "
+        r"\overline{AC}\cong\overline{DF} (hypotenuses) and \overline{BC}\cong\overline{EF} (a leg). "
+        r"Which congruence theorem applies?"
+    )
+    assert cong is not None and cong.ask == "prove", cong
+    assert "right triangle" not in cong.label
 
     print("alignment skill gate: ok")
     print("rectangle kept", kept)

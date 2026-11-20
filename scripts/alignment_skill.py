@@ -787,10 +787,11 @@ def section_slug_score(slug: str, profile: SkillProfile, *, book_rank: int = 0) 
     if not specific and len(generic) < 2:
         return 0.0
     # When the topic has two or more specific tokens, a section that shares only
-    # a modifier (absolute, but not extremum) is a different skill.
+    # a shorter modifier is a different skill. Break longest-token ties by
+    # spelling so the choice does not depend on set order.
     topic_specific = set(profile.specific)
     if len(topic_specific) >= 2 and not topic_specific <= tokens:
-        longest = max(topic_specific, key=len)
+        longest = min(topic_specific, key=lambda tok: (-len(tok), tok))
         if longest not in tokens and len(specific) < 2:
             return 0.0
     score = 4.0 * len(specific) + 1.6 * len(generic)
@@ -799,3 +800,425 @@ def section_slug_score(slug: str, profile: SkillProfile, *, book_rank: int = 0) 
     elif book_rank >= 2:
         score -= 0.3
     return score
+
+
+# ---------------------------------------------------------------------------
+# In-topic forms the generator does not emit
+# ---------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class QuestionForm:
+    """One given/find pair. Number size and extra steps are not a new form."""
+
+    ask: str
+    given: str
+    label: str
+    stated: bool = True
+
+    @property
+    def key(self) -> tuple[str, str]:
+        return (self.ask, self.given)
+
+
+def _stem_text(sample: dict) -> str:
+    instr = (sample.get("instruction_latex") or "").strip()
+    prompt = (sample.get("prompt_latex") or sample.get("prompt_text") or "").strip()
+    if instr and instr not in prompt:
+        return f"{instr} {prompt}"
+    return prompt or instr
+
+
+def _clean_stem(text: str) -> str:
+    t = re.sub(r"\s+", " ", text or "").strip()
+    t = re.sub(r"^\d+\s*[.)]\s*", "", t)
+    return t
+
+
+def question_form(text: str, topic_name: str = "") -> QuestionForm | None:
+    """Name what is given and what is asked. None when the stem does not say."""
+    raw = _clean_stem(text)
+    if not raw:
+        return None
+    t = raw.lower()
+    area_known = re.search(
+        r"\barea (is|of (a|the) \w+ is)\b|\bits area is\b|\band area \d|\barea \d",
+        t,
+    ) is not None
+    asks_missing_side = re.search(
+        r"unknown side|missing side|longer side|shorter side|other side|third side|"
+        r"length of the leg|find the length of the|what is the length",
+        t,
+    ) is not None
+
+    if re.search(r"select all (the )?equations|which equations|equations that represent", t):
+        if re.search(r"\barea\b", t) and re.search(r"side|length|width", t):
+            return QuestionForm(
+                "select_equations",
+                "sides_and_area",
+                "select equations that relate the side lengths and the area",
+            )
+        if re.search(r"hanger|diagram|tape|figure|balance", t):
+            return QuestionForm(
+                "select_equations",
+                "diagram",
+                "select the equations that match the diagram",
+            )
+        return QuestionForm("select_equations", "shown", "select the equations that match the given information")
+
+    if re.search(r"write an equation (to represent|for|of the line|of a line)", t) or re.search(
+        r"write the (point-slope )?equation", t
+    ):
+        if re.search(r"hanger|diagram|tape|figure|balance", t):
+            return QuestionForm("write_equation", "diagram", "write the equation that the diagram shows")
+        if re.search(r"slope", t) and re.search(r"through|point", t):
+            return QuestionForm(
+                "write_equation",
+                "slope_and_point",
+                "write the equation of a line given its slope and a point",
+            )
+        if re.search(r"through", t) and re.search(r"\band\b", t):
+            return QuestionForm(
+                "write_equation",
+                "two_points",
+                "write the equation of a line through two points",
+            )
+        return QuestionForm("write_equation", "situation", "write an equation for the situation")
+
+    if asks_missing_side and (area_known or re.search(r"\barea\b", t)):
+        return QuestionForm(
+            "missing_side",
+            "area_and_one_side",
+            "find the missing side given the area and one side",
+        )
+    if re.search(r"find the area|what is the area", t) or (
+        re.search(r"\bfind the area\b", t) or re.search(r"area of the (rectangle|triangle|circle|square|parallelogram)", t)
+        and re.search(r"\bfind\b", t)
+    ):
+        if re.search(r"\bradius\b", t):
+            given, phrase = "radius", "the radius"
+        elif re.search(r"\bbase\b", t) and re.search(r"\bheight\b", t):
+            given, phrase = "both_sides", "both side lengths"
+        else:
+            given, phrase = "dimensions", "the dimensions"
+        return QuestionForm("area", given, f"find the area given {phrase}")
+
+    if re.search(r"congruence theorem|prove the triangles are congruent|are the triangles congruent", t):
+        if re.search(r"which congruence theorem", t):
+            return QuestionForm(
+                "prove",
+                "given_parts",
+                "name the congruence theorem for the given corresponding parts",
+            )
+        return QuestionForm(
+            "prove",
+            "decide",
+            "decide whether the triangles are congruent",
+        )
+    if re.search(r"\bpythagorean\b", t) or (
+        re.search(r"hypotenuse|right", t)
+        and re.search(r"triangle", t)
+        and re.search(r"find the length|missing side|\bfind\b", t)
+        and not re.search(r"congruence|prove", t)
+    ):
+        return QuestionForm(
+            "missing_side",
+            "right_triangle",
+            "find a missing side of a right triangle",
+        )
+
+    if re.search(r"plot and label all numbers with an absolute value|numbers with an absolute value", t):
+        return QuestionForm(
+            "plot",
+            "given_absolute_value",
+            "plot the numbers that have a given absolute value",
+        )
+    if re.search(r"\border\b", t) and has_abs(raw):
+        return QuestionForm(
+            "order",
+            "absolute_values",
+            "order numbers that include absolute values",
+        )
+    if re.search(r"find the absolute value|absolute value of", t) or (
+        re.search(r"absolute value", t) and re.search(r"\bfind\b", t) and has_abs(raw) and not has_eq(raw)
+    ):
+        return QuestionForm("evaluate", "absolute_value", "find the absolute value of a number")
+
+    if re.search(r"is [^.]{0,40} a solution|which [^.]{0,40} is a solution", t):
+        return QuestionForm(
+            "check_solution",
+            "equation",
+            "decide whether a given value is a solution of the equation",
+        )
+
+    if re.search(r"use the fact that", t) and re.search(r"\\div|÷|/", raw):
+        return QuestionForm(
+            "divide",
+            "related_quotient",
+            "use a known quotient to find a related quotient",
+        )
+    if re.search(r"how many (people|groups|shares)|each person gets|sharing", t) and re.search(
+        r"divis|divid|quotient|\\div|÷", t + raw
+    ):
+        return QuestionForm(
+            "divide",
+            "how_many_groups",
+            "given a total and the size of each share, find how many groups",
+        )
+    if re.search(r"\\div|÷|find each quotient|\bdivide\b", raw if "\\div" in raw or "÷" in raw else t):
+        return QuestionForm("divide", "two_numbers", "divide two numbers or fractions")
+
+    if re.search(r"create a (box plot|histogram|dot plot)|make a (box plot|histogram|dot plot)", t):
+        if "box plot" in t:
+            kind = "box plot"
+        elif "histogram" in t:
+            kind = "histogram"
+        elif "dot plot" in t:
+            kind = "dot plot"
+        else:
+            kind = "display"
+        return QuestionForm("create_display", kind.replace(" ", "_"), f"create a {kind} from a data table")
+    if re.search(r"\bmatch\b", t) and re.search(r"histogram|dot plot", t):
+        if "histogram" in t and "dot plot" in t:
+            label = "match a histogram to a dot plot of the same data"
+        elif "histogram" in t:
+            label = "match histograms of the same data"
+        else:
+            label = "match dot plots of the same data"
+        return QuestionForm("match", "displays", label)
+    if re.search(r"box plot", t) and re.search(r"greatest|maximum|most", t):
+        return QuestionForm("read_stat", "maximum", "read the maximum from a box plot")
+    if re.search(r"box plot", t) and re.search(r"median", t):
+        return QuestionForm("read_stat", "median", "read the median from a box plot")
+    if re.search(r"interquartile|i ?q ?r", t):
+        return QuestionForm("read_stat", "iqr", "read the interquartile range from a box plot")
+    if re.search(r"histogram", t) and re.search(r"how many|interval", t):
+        return QuestionForm("read_stat", "histogram_count", "read a count from a histogram")
+
+    if re.search(r"slope between two points|slope between", t) or (
+        re.search(r"\bslope\b", t) and re.search(r"two points", t)
+    ):
+        return QuestionForm("slope", "two_points", "find the slope between two points")
+    if re.search(r"perpendicular", t) and re.search(r"slope", t):
+        return QuestionForm(
+            "slope",
+            "perpendicular",
+            "find the slope of a line perpendicular to a given line",
+        )
+    if re.search(r"parallel", t) and re.search(r"slope", t):
+        return QuestionForm(
+            "slope",
+            "parallel",
+            "find the slope of a line parallel to a given line",
+        )
+
+    if re.search(r"dy\s*/\s*dt|dx\s*/\s*dt|\\frac\{d\s*y\}\{d\s*t\}|\\frac\{d\s*x\}\{d\s*t\}", raw):
+        return QuestionForm(
+            "related_rate",
+            "equation_and_rates",
+            "given y in terms of x and a rate, find the related rate",
+        )
+    if re.search(r"how fast|at what rate|rate at which", t):
+        return QuestionForm(
+            "related_rate",
+            "geometric",
+            "given one changing quantity, find how fast a related quantity changes",
+        )
+
+    if re.search(r"what asymptotes", t):
+        return QuestionForm(
+            "asymptotes",
+            "from_derivative",
+            "name the asymptotes of a function from information about its derivative",
+        )
+    if re.search(r"\\lim|\blimit\b", raw if "\\lim" in raw else t):
+        return QuestionForm("limit", "explicit", "evaluate a limit")
+
+    # Derivative at a point, including h'(4) when f and g are not given as formulas.
+    point_value = re.search(r"at \$\(|at \(|at the point", t) is not None
+    prime = re.search(r"\^\{?\s*['′]|\\prime|['′]\s*\(", raw) is not None
+    topic_is_deriv = re.search(r"deriv|differenti|quotient rule|product rule|chain rule", topic_name, re.I) is not None
+    if prime or (point_value and (topic_is_deriv or re.search(r"deriv|d/dx|\\frac\{d", raw + t))):
+        if re.search(r"f\s*\(\s*x\s*\)", t) and re.search(r"g\s*\(\s*x\s*\)", t):
+            return QuestionForm(
+                "derivative",
+                "abstract_at_point",
+                "find the derivative at a number when the function is built from f and g",
+            )
+        return QuestionForm("derivative", "at_a_point", "find the derivative at a given point")
+    if re.search(r"differentiate|find the derivative|\\frac\{d|d/dx", raw + t):
+        return QuestionForm("derivative", "explicit", "differentiate an explicit function")
+
+    if has_abs(raw) and has_ineq(raw) and re.search(r"\bsolve\b", t):
+        return QuestionForm("solve", "absolute_value_inequality", "solve an absolute-value inequality")
+    if has_abs(raw) and has_eq(raw) and not has_ineq(raw):
+        return QuestionForm("solve", "absolute_value_equation", "solve an absolute-value equation")
+
+    if re.search(r"can sides of lengths|form a triangle\b", t):
+        return QuestionForm(
+            "check",
+            "three_lengths",
+            "decide whether three lengths can form a triangle",
+        )
+    if re.search(r"\bperimeter\b", t) and re.search(r"third side|how long", t):
+        return QuestionForm(
+            "missing_side",
+            "perimeter",
+            "find a side given the other sides and the perimeter",
+        )
+
+    if re.search(r"use the (diagram|hanger|tape|figure) to solve", t):
+        return QuestionForm("solve", "diagram", "solve the equation shown by the diagram")
+    if re.search(r"\bcompare\b", t) and has_abs(raw):
+        return QuestionForm("compare", "absolute_values", "compare two absolute values")
+    if re.search(r"how many (dots|values|students)", t) and re.search(r"dot plot|histogram", t):
+        return QuestionForm("read_stat", "display_count", "read a count from the display")
+    if re.search(r"find the (gcf|greatest common factor|lcm|least common multiple)", t):
+        what = "greatest common factor" if re.search(r"gcf|greatest common factor", t) else "least common multiple"
+        return QuestionForm("evaluate", what.replace(" ", "_"), f"find the {what} of whole numbers")
+    if re.search(r"find the volume|what is the volume", t):
+        return QuestionForm("volume", "dimensions", "find the volume given the dimensions")
+
+    if re.search(r"\bfactor\b", t):
+        return QuestionForm("factor", "polynomial", "factor a polynomial")
+    if re.search(r"\bgraph\b|\bsketch\b", t):
+        return QuestionForm("graph", "relation", "graph the relation")
+    if re.search(r"\bsimplif", t):
+        return QuestionForm("simplify", "expression", "simplify the expression")
+    if re.search(r"\bintegrat|\\int", raw + t):
+        return QuestionForm("integral", "explicit", "integrate an explicit function")
+    if re.search(r"\bsolve\b", t):
+        if has_ineq(raw) and not has_eq(raw):
+            return QuestionForm("solve", "inequality", "solve an inequality")
+        if re.search(r"\^\{?\s*2|x\^2", raw) and re.search(r"=\s*\d|\)\s*\^\s*\{?2\}?\s*=", raw):
+            return QuestionForm("solve", "by_square_root", "solve an equation by taking square roots")
+        return QuestionForm("solve", "equation", "solve an equation")
+    if re.search(r"\bevaluat", t) and not re.search(r"\\lim", raw):
+        return QuestionForm("evaluate", "expression", "evaluate an expression")
+    if re.search(r"write .{0,20} in words", t):
+        return QuestionForm("write", "number_in_words", "write a number in words")
+    return None
+
+
+def _skill_hit(text: str, topic: dict, generated_text: str) -> bool:
+    """The published stem is still this topic, not a different skill that slipped through."""
+    name = f"{topic.get('name', '')} {topic.get('type_id', '')}"
+    name_spec = {tok for tok in content_tokens(name) if tok not in GENERIC_ALONE}
+    text_toks = content_tokens(text)
+    if name_spec & text_toks:
+        return True
+    gen_spec = {tok for tok in content_tokens(generated_text) if tok not in GENERIC_ALONE}
+    if gen_spec & text_toks:
+        return True
+    if has_abs(text) and has_abs(generated_text):
+        return True
+    if re.search(r"deriv|d/dx|\\frac\{d", generated_text, re.I) and re.search(
+        r"deriv|d/dx|\\frac\{d|\\prime|['′]", text
+    ):
+        return True
+    if re.search(r"\\int", generated_text) and re.search(r"\\int", text):
+        return True
+    if re.search(r"\\lim", generated_text) and re.search(r"\\lim|asymptot", text, re.I):
+        return True
+    if re.search(r"\\div|÷", generated_text) and re.search(r"\\div|÷|quotient|divid", text, re.I):
+        return True
+    if re.search(r"related rate|how fast", generated_text, re.I) and re.search(
+        r"\\frac\{d|how fast|at what rate|dy/dt|dx/dt", text, re.I
+    ):
+        return True
+    if re.search(r"deriv|differenti|quotient rule|product rule|chain rule", name, re.I) and re.search(
+        r"at \(|at \$", text, re.I
+    ):
+        return True
+    if re.search(r"\bsolve\b", generated_text, re.I) and re.search(
+        r"is [^.]{0,40} a solution", text, re.I
+    ):
+        return True
+    # Area of a rectangle can be asked without repeating the word rectangle
+    # ("television screen", "side lengths and area").
+    blob = f"{name} {generated_text}"
+    if (
+        re.search(r"\barea\b", text, re.I)
+        and re.search(r"\barea\b", blob, re.I)
+        and re.search(r"side|length|width|base|height|rectangle", text, re.I)
+        and re.search(r"rectangle|base|height", blob, re.I)
+    ):
+        return True
+    return False
+
+
+def in_topic_not_generated(topic: dict, samples: list[dict], cards: list[dict]) -> dict:
+    """Forms the on-topic published cards use that none of the six stems emit."""
+    ok = [s for s in samples if not s.get("error")]
+    generated_text = "\n".join(_stem_text(s) for s in ok)
+    topic_name = f"{topic.get('name', '')} {topic.get('type_id', '')}".lower()
+    generated: list[QuestionForm] = []
+    seen_g: set[tuple[str, str]] = set()
+    for sample in ok:
+        form = question_form(_stem_text(sample), f"{topic.get('name', '')} {topic.get('type_id', '')}")
+        if form and form.key not in seen_g:
+            seen_g.add(form.key)
+            generated.append(form)
+    found: list[tuple[tuple[str, str], str]] = []
+    seen_m: set[tuple[str, str]] = set()
+    for card in cards:
+        text = card.get("text") or ""
+        form = question_form(text, f"{topic.get('name', '')} {topic.get('type_id', '')}")
+        if form is None or form.key in seen_g or form.key in seen_m:
+            continue
+        if form.given == "shown":
+            continue
+        if not _skill_hit(text, topic, generated_text):
+            continue
+        # LCM is not a missing form of GCF, and the reverse.
+        label_l = form.label.lower()
+        if "least common multiple" in label_l and not re.search(r"lcm|least common|multiple", topic_name):
+            continue
+        if "greatest common factor" in label_l and not re.search(r"gcf|greatest common", topic_name):
+            continue
+        # Same ask with only a heavier expression is not a new form.
+        if any(g.ask == form.ask and g.given == form.given for g in generated):
+            continue
+        seen_m.add(form.key)
+        found.append((form.key, form.label))
+    # A missing form has to be the same skill as something the generator already asks,
+    # or the inverse of that ask (area given sides vs side given area). A different
+    # operation is not a missing form. If the generator's ask was not read, do not
+    # invent gaps.
+    inverse = {
+        "area": {"missing_side", "select_equations"},
+        "missing_side": {"area", "select_equations"},
+        "evaluate": {"plot", "order", "compare"},
+        "compare": {"plot", "order", "evaluate"},
+        "plot": {"evaluate", "order", "compare"},
+        "order": {"evaluate", "plot", "compare"},
+        "read_stat": {"create_display", "match", "read_stat"},
+        "create_display": {"read_stat", "match"},
+        "match": {"read_stat", "create_display"},
+        "solve": {"check_solution", "select_equations", "write_equation"},
+        "write_equation": {"select_equations", "solve"},
+        "select_equations": {"write_equation", "solve"},
+        "divide": {"divide"},
+        "derivative": {"derivative"},
+        "related_rate": {"related_rate"},
+        "slope": {"slope", "write_equation"},
+        "limit": {"asymptotes"},
+        "prove": {"prove"},
+    }
+    if "fundamental theorem" in topic_name:
+        inverse.setdefault("integral", set()).add("derivative")
+        inverse.setdefault("derivative", set()).add("integral")
+    allowed = set()
+    for form in generated:
+        allowed.add(form.ask)
+        allowed |= inverse.get(form.ask, set())
+    if not generated:
+        missing = []
+    else:
+        missing = [label for key, label in found if key[0] in allowed]
+    gen_labels = [form.label for form in generated] or ["the stems do not state a separate given and find"]
+    if missing:
+        body = "; ".join(missing)
+    else:
+        body = "none seen"
+    note = f"In topic, not generated: {body}. Generated: {'; '.join(gen_labels)}."
+    return {"generated": gen_labels, "missing": missing, "note": note}

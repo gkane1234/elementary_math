@@ -39,6 +39,7 @@ sys.path.insert(0, str(ROOT))
 
 from scripts.alignment_skill import (  # noqa: E402
     filename_score,
+    in_topic_not_generated,
     item_matches,
     section_slug_score,
     skill_profile,
@@ -2212,6 +2213,7 @@ def render_topic_html(topic: dict, generated: dict, ref: dict, assessment: dict)
         f"<b class='badge'>{esc(verdict)}</b></p>"
         f"<ul class='dims'>{dim_html}</ul>"
         f"<p class='note'>{esc(assessment.get('note') or '')}</p>"
+        f"<p class='gap'>{esc((assessment.get('in_topic_gap') or {}).get('note') or '')}</p>"
         f"{src}</header>"
         + "".join(tier_html)
         + fig_block
@@ -2236,6 +2238,7 @@ a { color: #1d4ed8; }
 .v-generate_failed { border-left-color: #111; }
 .badge { text-transform: uppercase; letter-spacing: .04em; font-size: 12px; }
 .note { background: #f5f5f4; padding: 10px 12px; }
+.gap { background: #fff7ed; border: 1px solid #fed7aa; padding: 8px 12px; margin: 8px 0; }
 .dims { display: flex; flex-wrap: wrap; gap: 8px 14px; padding: 0; list-style: none; font: 13px system-ui, sans-serif; }
 .dims li { background: #f5f5f4; padding: 3px 8px; }
 .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -2354,7 +2357,30 @@ def write_pack(
     spot_body.append("</main>")
     write_html_page(OUT / "spotlight.html", "Alignment spotlight", "".join(spot_body))
 
+    gap_rows = []
+    for topic in topics:
+        gap = assessments[topic["type_id"]].get("in_topic_gap") or {}
+        missing = gap.get("missing") or []
+        if missing:
+            gap_rows.append((len(missing), topic, gap))
+    gap_rows.sort(key=lambda row: (-row[0], row[1]["name"]))
+    clearest = [
+        {
+            "type_id": topic["type_id"],
+            "name": topic["name"],
+            "course": topic["course_name"],
+            "generated": gap.get("generated") or [],
+            "missing": gap.get("missing") or [],
+        }
+        for _, topic, gap in gap_rows[:12]
+    ]
+    gap_list = "".join(
+        f"<li><a href='{esc(topic['course_id'])}.html#{esc(topic['type_id'])}'>{esc(topic['name'])}</a> "
+        f"({esc(topic['course_name'])}): {esc('; '.join(gap.get('missing') or []))}</li>"
+        for _, topic, gap in gap_rows[:12]
+    )
     count_boxes = "".join(f"<div><b>{n}</b><br>{esc(k)}</div>" for k, n in sorted(counts.items()))
+    count_boxes += f"<div><b>{len(gap_rows)}</b><br>in-topic forms not generated</div>"
     rows_html = []
     for topic in topics:
         verdict = assessments[topic["type_id"]]["verdict"]
@@ -2374,6 +2400,10 @@ Hard means the same skill, and it may use an earlier prerequisite. It does not m
 <p class='meta'>Foundations leaves with no <code>type_id</code> are not generated: {esc(", ".join(foundations) or "none")}.</p>
 <div class='counts'>{count_boxes}<div><b>{visual_n}</b><br>visual leaves</div></div>
 <p><a href='spotlight.html'>Open the spotlight first</a> (hangers, tape diagrams, histograms, factoring, graphing, congruence).</p>
+<p><b>{len(gap_rows)}</b> topics have at least one in-topic form the generator does not emit. Clearest gaps:</p>
+<ul>
+{gap_list or "<li>none seen</li>"}
+</ul>
 <ul>
 {''.join(f"<li><a href='{esc(href)}'>{esc(name)}</a> ({n})</li>" for name, href, n in course_links)}
 </ul>
@@ -2396,6 +2426,11 @@ Hard means the same skill, and it may use an earlier prerequisite. It does not m
         "visual_leaves": visual_n,
         "foundations_without_type": foundations,
         "courses": {name: n for name, _, n in course_links},
+        "in_topic_not_generated": {
+            "topics_with_a_gap": len(gap_rows),
+            "topics_none_seen": len(topics) - len(gap_rows),
+            "clearest_gaps": clearest,
+        },
     }
     (OUT / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     readme = f"""# Published vs generated
@@ -2404,6 +2439,7 @@ Open `index.html` (or `spotlight.html` for a short visual pass).
 
 {len(topics)} wired leaves. Verdict counts: {json.dumps(dict(counts))}.
 Visual leaves (name or a generated figure): {visual_n}.
+Topics with an in-topic form the generator does not emit: {len(gap_rows)}.
 
 ## What a row is
 
@@ -2435,7 +2471,10 @@ QE_LOG_GENERATED=0 PYTHONPATH=. python scripts/build_alignment_pack.py
 Downloaded pages and PDFs stay in `textbooks/alignment_cache/` (gitignored). The HTML pack quotes short excerpts and stores the figures it shows.
 """
     (OUT / "README.md").write_text(readme, encoding="utf-8")
-    log(f"wrote {OUT / 'index.html'} counts={dict(counts)} visual={visual_n}")
+    log(
+        f"wrote {OUT / 'index.html'} counts={dict(counts)} visual={visual_n} "
+        f"in_topic_gaps={len(gap_rows)}"
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -2498,6 +2537,12 @@ def main(argv: list[str] | None = None) -> int:
     for i, topic in enumerate(topics, 1):
         ref = build_reference(topic, generated.get(topic["type_id"], {}), slugs, our_catalog, im_files, section_cache)
         assessment = assess(topic, generated.get(topic["type_id"], {"samples": []}), ref)
+        cards = [card for tier in TIERS for card in (ref.get("tiers", {}).get(tier) or [])]
+        assessment["in_topic_gap"] = in_topic_not_generated(
+            topic,
+            (generated.get(topic["type_id"]) or {}).get("samples") or [],
+            cards,
+        )
         refs[topic["type_id"]] = ref
         assessments[topic["type_id"]] = assessment
         if i % 20 == 0 or i == len(topics):

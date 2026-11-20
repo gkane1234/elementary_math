@@ -312,7 +312,10 @@ def test_write_rate_rotates_vehicles_and_asks():
         vehicles.add(str(meta0.get("vehicle") or ""))
         d0_asks.add(str(meta0.get("ask") or ""))
         prompt = (q0.prompt_text or "") + (q0.prompt_latex or "")
-        assert "Write an equation" in prompt
+        if meta0.get("question_form") == "rate_table":
+            assert "complete the distances" in prompt.lower()
+        else:
+            assert "Write an equation" in prompt
         assert not looks_like_dumped_equation(prompt)
         q16 = _qs("g6_constant_rate_equations", 16.0, 200 + seed)
         meta16 = q16.metadata or {}
@@ -324,6 +327,11 @@ def test_write_rate_rotates_vehicles_and_asks():
     assert len(vehicles) >= 3, vehicles
     assert vehicles <= {"bike", "car", "walk", "bus", "train"}
     assert d0_asks == {"distance"}, d0_asks
+    assert any(
+        ( _qs("g6_constant_rate_equations", 0.0, seed).metadata or {} ).get("question_form")
+        == "rate_table"
+        for seed in range(9)
+    )
     assert {"distance", "time", "rate"} <= asks, asks
 
 

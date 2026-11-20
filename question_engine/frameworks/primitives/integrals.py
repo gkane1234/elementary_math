@@ -2623,6 +2623,79 @@ def _sample_ftc1_sin(var: str) -> tuple[str, str, list[str]]:
     return prompt, "1", ["trig"]
 
 
+def _ftc_same_skill_form(
+    rng: random.Random, var: str, d: float, *, leaf: str, slot: int = 0
+) -> tuple[str, str, list[str], str] | None:
+    """Other FTC given/find forms. About one item in four, same skill.
+
+    First FTC also differentiates the accumulation function and evaluates
+    that derivative at a point. Second FTC also evaluates F' at a point and
+    integrates an explicit function.
+    """
+    if slot not in (1, 2):
+        return None
+    a = 0 if d < 14 else 1
+    if d < 8:
+        k = rng.randint(0, 3)
+        integrand = rf"t+{k}" if k else "t"
+        deriv_fn = rf"{var}+{k}" if k else var
+        classes = ["algebraic"]
+        kind = "linear"
+    elif d < 16:
+        k = rng.randint(1, 5)
+        integrand = rf"{k}-t"
+        deriv_fn = rf"{k}-{var}"
+        classes = ["algebraic"]
+        kind = "linear"
+    else:
+        k = 0
+        if rng.random() < 0.5:
+            integrand = r"\sqrt{t}"
+            deriv_fn = rf"\sqrt{{{var}}}"
+            classes = ["algebraic"]
+            kind = "sqrt"
+        else:
+            integrand = r"\sin(t)"
+            deriv_fn = rf"\sin({var})"
+            classes = ["trig"]
+            kind = "sin"
+    c = rng.randint(1, 3 if d < 12 else 5)
+    if leaf == "ftc2" and slot == 2:
+        b = rng.randint(2, 4)
+        if kind == "sin":
+            prompt = r"\int_{0}^{\pi/2} \sin(t)\,dt"
+            return prompt, "1", classes, "ftc2_integrate"
+        if kind == "sqrt":
+            prompt = r"\int_{0}^{4} \sqrt{t}\,dt"
+            return prompt, frac_latex(Fraction(16, 3)), classes, "ftc2_integrate"
+        if d < 8:
+            val = Fraction(b * b, 2) + k * b
+        else:
+            val = k * b - Fraction(b * b, 2)
+        prompt = rf"\int_{{0}}^{{{b}}} ({integrand})\,dt"
+        return prompt, frac_latex(val), classes, "ftc2_integrate"
+    if leaf == "ftc1" and slot == 2:
+        prompt = (
+            rf"\text{{Let }} F({var})=\int_{{{a}}}^{{{var}}}({integrand})\,dt. "
+            rf"\text{{Find }} F'({var})."
+        )
+        return prompt, deriv_fn, classes, "ftc1_deriv"
+    if kind == "sqrt":
+        value = rf"\sqrt{{{c}}}"
+    elif kind == "sin":
+        value = rf"\sin({c})"
+    elif d < 8:
+        value = str(c + k)
+    else:
+        value = str(k - c)
+    fid = "ftc1_at_point" if leaf == "ftc1" else "ftc2_at_point"
+    prompt = (
+        rf"\text{{Let }} F({var})=\int_{{{a}}}^{{{var}}}({integrand})\,dt. "
+        rf"\text{{Find }} F'({c})."
+    )
+    return prompt, value, classes, fid
+
+
 def _sample_ftc(
     rng: random.Random, spec: IntegralSpec
 ) -> tuple[str, str, dict[str, Any]]:
@@ -2670,6 +2743,11 @@ def _sample_ftc(
             prompt, answer, classes = _sample_ftc1_sin(var)
         else:
             prompt, answer, classes = _sample_ftc1_linear(rng, var, b_hi)
+    alt = _ftc_same_skill_form(
+        rng, var, d, leaf="ftc1", slot=int(getattr(spec, "ftc_form_slot", 0) or 0)
+    )
+    if alt is not None:
+        prompt, answer, classes, fid = alt
     return prompt, answer, {
         "function_classes": classes,
         "family": fid,
@@ -2770,6 +2848,11 @@ def _sample_ftc2(
             )
         else:
             prompt, answer, classes = _sample_ftc2_poly(rng, var)
+    alt = _ftc_same_skill_form(
+        rng, var, d, leaf="ftc2", slot=int(getattr(spec, "ftc_form_slot", 0) or 0)
+    )
+    if alt is not None:
+        prompt, answer, classes, fid = alt
     return prompt, answer, {
         "function_classes": classes,
         "family": fid,
@@ -4551,6 +4634,10 @@ def sample_integral_expression(
             )
         )
 
+    from question_engine.frameworks.form_mix import form_slot
+
+    if key in {"first_fundamental_theorem", "second_fundamental_theorem"}:
+        spec.ftc_form_slot = form_slot(settings, 4)
     prompt, answer, extra = _run_pipeline(rng, spec, pipeline)
     # Sampler may refine tricks (e.g. drop wrap on some families)
     if isinstance(extra.get("tricks_required"), (list, tuple)) and extra["tricks_required"]:

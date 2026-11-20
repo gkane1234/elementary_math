@@ -10,6 +10,7 @@ from fractions import Fraction
 from typing import Any
 
 from .base import QuestionFramework
+from .form_mix import form_slot
 from ..generators.utils import (
     format_binop_expression,
     format_fraction_division_latex,
@@ -914,9 +915,45 @@ class RationalFramework(NumberFramework):
             return f"-\\frac{{{abs(num)}}}{{{den}}}"
         return f"\\frac{{{num}}}{{{den}}}"
 
+    def _how_many_groups(self) -> tuple[str, str, str | None]:
+        """Total and share size → how many groups. Still fraction division."""
+        share_den = random.choice((2, 3, 4, 5, 6, 8))
+        share_num = random.randint(1, share_den - 1)
+        groups = random.randint(2, 8)
+        share = Fraction(share_num, share_den)
+        total = share * groups
+        prompt = (
+            f"\\text{{How many groups of }} {frac_latex(share)} "
+            f"\\text{{ are in }} {frac_latex(total)}\\text{{?}}"
+        )
+        return prompt, "how many groups", str(groups)
+
+    def _related_quotient(self) -> tuple[str, str, str | None]:
+        """Use a known quotient to find a related quotient. Still division."""
+        share_den = random.choice((2, 3, 4, 5, 8))
+        share_num = random.randint(1, max(1, share_den // 2))
+        known_q = random.randint(2, 8)
+        share = Fraction(share_num, share_den)
+        total = share * known_q
+        factor = random.choice((2, 3, 4))
+        related_share = share * factor
+        related_q = Fraction(known_q, factor)
+        prompt = (
+            f"\\text{{You know that }} {frac_latex(total)} \\div {frac_latex(share)} "
+            f"= {known_q}. "
+            f"\\text{{Find }} {frac_latex(total)} \\div {frac_latex(related_share)}."
+        )
+        return prompt, "related quotient", frac_latex(related_q)
+
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         params = number_params_from_settings(settings)
         op = self._resolve_operation()
+        if op == "/" and settings.get("g6_divide_forms"):
+            slot = form_slot(settings, 3)
+            if slot == 1:
+                return self._how_many_groups()
+            if slot == 2:
+                return self._related_quotient()
         if op == "/" and "difficulty" in settings and settings["difficulty"] is not None:
             a_num, a_den, b_num, b_den, result = self._sample_effort_divide_pair(settings)
             a_tex = self._raw_frac_latex(a_num, a_den)
@@ -4450,6 +4487,21 @@ class LongDivisionWithRemaindersFramework(NumberFramework):
 
         prompt_latex = f"{dividend} \\div {divisor}"
         answer = f"{quotient} \\text{{ R }} {remainder}"
+        if form_slot(settings, 3) == 1:
+            places = (
+                "ones",
+                "tens",
+                "hundreds",
+                "thousands",
+                "ten-thousands",
+            )
+            digits = len(str(abs(quotient)))
+            place = places[min(digits, len(places)) - 1]
+            prompt_latex = (
+                f"\\text{{When dividing }} {dividend} \\text{{ by }} {divisor}"
+                f"\\text{{, in which place is the first digit of the quotient?}}"
+            )
+            return prompt_latex, f"first-digit place of {dividend} ÷ {divisor}", place
         return prompt_latex, f"{dividend} ÷ {divisor}", answer
 
 
@@ -5786,10 +5838,47 @@ class AbsoluteValueFramework(NumberFramework):
             "order": "OrderAbs",
         }.get(mode, "AbsoluteValue")
 
+    def _plot_given_absolute_value(self, d: float) -> tuple[str, str, str | None]:
+        """Plot every number with a given absolute value."""
+        if d < 10.0:
+            n = random.randint(1, 8)
+        elif d < 18.0:
+            n = random.randint(2, 12)
+        else:
+            n = Fraction(random.randint(1, 7), random.choice((2, 3, 4)))
+        shown = str(n) if isinstance(n, int) else frac_latex(n)
+        prompt = (
+            f"\\text{{Plot all numbers whose absolute value is }} {shown}."
+        )
+        if isinstance(n, int):
+            answer = f"{-n},\\ {n}"
+        else:
+            answer = f"-{frac_latex(n)},\\ {frac_latex(n)}"
+        return prompt, f"plot |x| = {n}", answer
+
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         from question_engine.frameworks.difficulty_budget import settings_difficulty
 
         d = max(0.0, settings_difficulty(settings, default=8.0))
+        n_forms = 2 if self.mode == "order" else 3
+        slot = form_slot(settings, n_forms)
+        # Evaluate / compare already have their own task. Seeded sets also plot
+        # the numbers with a given absolute value, and order numbers that include
+        # absolute values. The order leaf already orders; it also plots.
+        if slot == 1:
+            return self._plot_given_absolute_value(d)
+        if slot == 2 and self.mode != "order":
+            values = _sample_abs_order_values(d)
+            shown = [
+                (abs(v), rf"\left| {v} \right|" if i % 2 == 0 else str(v))
+                for i, v in enumerate(values)
+            ]
+            labels = ", ".join(token for _mag, token in shown)
+            ordered = ", ".join(token for _mag, token in sorted(shown, key=lambda item: item[0]))
+            prompt = (
+                f"\\text{{Order from least to greatest absolute value: }} {labels}"
+            )
+            return prompt, "order numbers that include absolute values", ordered
         if self.mode == "evaluate":
             # Effort: sign / expression structure — not |146| magnitude theater.
             return self._build_evaluate(d)
@@ -5989,6 +6078,31 @@ class FractionDecimalConvertFramework(NumberFramework):
 
     def _build_fd_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         """Fraction ↔ decimal only; continuous D climbs terminating-decimal banks."""
+        if form_slot(settings, 3) == 1:
+            from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+            d = settings_difficulty(settings, default=0.0)
+            if d < 12:
+                bank = (
+                    (r"0.\overline{3}", Fraction(1, 3)),
+                    (r"0.\overline{6}", Fraction(2, 3)),
+                    (r"0.\overline{1}", Fraction(1, 9)),
+                    (r"0.\overline{2}", Fraction(2, 9)),
+                    (r"0.\overline{8}", Fraction(8, 9)),
+                )
+            else:
+                bank = (
+                    (r"0.\overline{09}", Fraction(1, 11)),
+                    (r"0.\overline{18}", Fraction(2, 11)),
+                    (r"0.\overline{27}", Fraction(3, 11)),
+                    (r"0.\overline{36}", Fraction(4, 11)),
+                    (r"0.\overline{45}", Fraction(5, 11)),
+                )
+            shown, frac = random.choice(bank)
+            prompt = (
+                f"\\text{{Write }} {shown} \\text{{ as a fraction in simplest form.}}"
+            )
+            return prompt, f"Write {shown} as a fraction", frac_latex(frac)
         triples = self._fdp_triples_for_difficulty(settings)
         frac, dec_text, _percent = random.choice(triples)
         to_decimal = (
@@ -6527,13 +6641,81 @@ class Grade6VisualFramework(NumberFramework):
                     format_measurement_text(str(b), unit),
                 )
             )
-            self._metadata = {"diagram_svg": figure}
+            base_tex = format_with_unit(frac_latex(a), unit)
+            height_tex = format_with_unit(frac_latex(b), unit)
+            area_tex = format_with_unit(frac_latex(area), unit, power=2)
+            slot = form_slot(settings, 3)
+            if slot == 1:
+                ask_height = random.random() < 0.5
+                if ask_height:
+                    known = rectangle_measure_svg(
+                        format_measurement_text(str(a), unit), "?"
+                    ) if self.mode == "fraction_rectangle" else triangle_measure_svg(
+                        format_measurement_text(str(a), unit), "?"
+                    )
+                    self._metadata = {
+                        "diagram_svg": known,
+                        "question_form": "missing_side",
+                    }
+                    return (
+                        f"\\text{{A {shape} has area }} {area_tex} "
+                        f"\\text{{ and base }} {base_tex}. "
+                        f"\\text{{Find the height.}}",
+                        f"Missing height of {shape}: area {area} {unit}^2, base {a}",
+                        height_tex,
+                    )
+                known = rectangle_measure_svg(
+                    "?", format_measurement_text(str(b), unit)
+                ) if self.mode == "fraction_rectangle" else triangle_measure_svg(
+                    "?", format_measurement_text(str(b), unit)
+                )
+                self._metadata = {
+                    "diagram_svg": known,
+                    "question_form": "missing_side",
+                }
+                return (
+                    f"\\text{{A {shape} has area }} {area_tex} "
+                    f"\\text{{ and height }} {height_tex}. "
+                    f"\\text{{Find the base.}}",
+                    f"Missing base of {shape}: area {area} {unit}^2, height {b}",
+                    base_tex,
+                )
+            if slot == 2:
+                if self.mode == "fraction_rectangle":
+                    correct = f"A = {frac_latex(a)} \\cdot {frac_latex(b)}"
+                    wrong_a = f"A = {frac_latex(a)} + {frac_latex(b)}"
+                    wrong_b = f"{frac_latex(a)} = A \\cdot {frac_latex(b)}"
+                else:
+                    correct = (
+                        f"A = \\frac{{1}}{{2}} \\cdot {frac_latex(a)} "
+                        f"\\cdot {frac_latex(b)}"
+                    )
+                    wrong_a = f"A = {frac_latex(a)} \\cdot {frac_latex(b)}"
+                    wrong_b = f"A = {frac_latex(a)} + {frac_latex(b)}"
+                choices = [correct, wrong_a, wrong_b]
+                random.shuffle(choices)
+                letters = ["(A)", "(B)", "(C)"]
+                listed = " ".join(
+                    f"{letters[i]}\\ {choices[i]}" for i in range(3)
+                )
+                letter = letters[choices.index(correct)]
+                self._metadata = {
+                    "diagram_svg": figure,
+                    "question_form": "select_equation",
+                }
+                return (
+                    f"\\text{{Which equation relates the side lengths and the area "
+                    f"of the {shape}?}} {listed}",
+                    f"Select the area equation for {shape}",
+                    letter,
+                )
+            self._metadata = {"diagram_svg": figure, "question_form": "find_area"}
             return (
                 f"\\text{{Find the area of the {shape} with base }} "
-                f"{format_with_unit(frac_latex(a), unit)} "
-                f"\\text{{ and height }} {format_with_unit(frac_latex(b), unit)}.",
+                f"{base_tex} "
+                f"\\text{{ and height }} {height_tex}.",
                 f"Area of {shape}: base {a} {unit}, height {b} {unit}",
-                format_with_unit(frac_latex(area), unit, power=2),
+                area_tex,
             )
 
         if self.mode in {"tape", "hanger", "inequality_hanger"}:
@@ -6572,13 +6754,44 @@ class Grade6VisualFramework(NumberFramework):
                 else:
                     relation = random.choice(["\\le", "\\ge"])
                 answer_relation = relation
-            else:
-                relation = "="
-                answer_relation = "="
+                self._metadata["question_form"] = "solve"
+                return (
+                    f"\\text{{Use the diagram to solve }} {parts}x {relation} {total}.",
+                    f"Solve {parts}x {relation.replace(chr(92), '')} {total}",
+                    f"x {answer_relation} {solution}",
+                )
+            # The figure is the only place the relationship is written.
+            correct = f"{parts}x = {total}"
+            slot = form_slot(settings, 3)
+            if slot == 1:
+                wrong = [
+                    f"{parts} + x = {total}",
+                    f"x^{{{parts}}} = {total}",
+                    f"{parts}x = {solution}",
+                ]
+                choices = [correct, *wrong[:2]]
+                random.shuffle(choices)
+                letters = ["(A)", "(B)", "(C)"]
+                listed = " ".join(f"{letters[i]}\\ {choices[i]}" for i in range(3))
+                letter = letters[choices.index(correct)]
+                self._metadata["question_form"] = "select_equation"
+                return (
+                    f"\\text{{Which equation matches the hanger diagram?}} {listed}",
+                    "Select the equation for the hanger",
+                    letter,
+                )
+            if slot == 2:
+                self._metadata["question_form"] = "write_equation"
+                return (
+                    "\\text{Write the equation shown by the hanger diagram.}",
+                    "Write the hanger equation",
+                    correct,
+                )
+            self._metadata["question_form"] = "solve"
             return (
-                f"\\text{{Use the diagram to solve }} {parts}x {relation} {total}.",
-                f"Solve {parts}x {relation.replace(chr(92), '')} {total}",
-                f"x {answer_relation} {solution}" if inequality else str(solution),
+                "\\text{Use the diagram to solve for } x.",
+                f"Solve {parts}x = {total} from the hanger",
+                str(solution),
             )
 
         if self.mode == "area_model_algebraic":
@@ -6812,6 +7025,40 @@ class Grade6VisualFramework(NumberFramework):
                 if include_axis
                 else r" \text{Draw and label your own axis.}"
             )
+            if form_slot(settings, 2) == 1:
+                same = list(values)
+                random.shuffle(same)
+                other = list(values)
+                other[0] = other[0] + (2 if other[0] < 20 else -2)
+                if sorted(other) == sorted(values):
+                    other[0] = other[0] + 1
+                pair = [
+                    ("same", ", ".join(str(v) for v in same)),
+                    ("other", ", ".join(str(v) for v in other)),
+                ]
+                random.shuffle(pair)
+                letters = ["(A)", "(B)"]
+                listed_choices = " ".join(
+                    f"{letters[i]}\\ {pair[i][1]}" for i in range(2)
+                )
+                letter = letters[0 if pair[0][0] == "same" else 1]
+                if self.mode == "draw_histogram":
+                    ask = (
+                        "\\text{Which list has the same dot plot as a histogram of }"
+                        f" \\{{{listed}\\}}\\text{{?}} {listed_choices}"
+                    )
+                else:
+                    ask = (
+                        "\\text{Which list makes the same dot plot as }"
+                        f" \\{{{listed}\\}}\\text{{?}} {listed_choices}"
+                    )
+                self._metadata["question_form"] = "match_display"
+                return (
+                    ask,
+                    f"Match a {label}",
+                    letter,
+                )
+            self._metadata["question_form"] = "create_display"
             return (
                 f"\\text{{Create a {label} for the data set }} \\{{{listed}\\}}."
                 f"{axis_hint}",

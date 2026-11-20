@@ -10,6 +10,7 @@ from statistics import median as stats_median
 from typing import Any, Literal
 
 from .base import QuestionFramework
+from .form_mix import form_slot
 from ..core.metadata import question_metadata
 from ..generators.utils import frac_latex, random_int_range
 
@@ -522,12 +523,46 @@ class DotPlotReadFramework(StatisticsFramework):
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         params = continuous_statistics_params(settings)
         values = _generate_data_set(settings, params=params)
-        mode = _dot_plot_task_mode(settings)
         self._last_values = values
+        include_answer = bool(settings.get("include_answer_key", False))
+        slot = form_slot(settings, 4)
+        if slot == 1:
+            self._last_chart = None
+            same = list(values)
+            random.shuffle(same)
+            other = list(values)
+            bump = 2 if (not other or other[0] < 30) else -2
+            other[0] = other[0] + bump
+            if sorted(other) == sorted(values):
+                other[0] = other[0] + 1
+            pair = [
+                ("same", _values_latex(same)),
+                ("other", _values_latex(other)),
+            ]
+            random.shuffle(pair)
+            letters = ["(A)", "(B)"]
+            listed = " ".join(f"{letters[i]}\\ {pair[i][1]}" for i in range(2))
+            letter = letters[0 if pair[0][0] == "same" else 1]
+            prompt = (
+                f"\\text{{Which list makes the same dot plot as }} "
+                f"\\{{{_values_latex(values)}\\}}\\text{{?}} {listed}"
+            )
+            return prompt, "match dot plots", letter if include_answer else None
+        if slot == 2:
+            self._last_chart = None
+            prompt = (
+                f"\\text{{Create a dot plot for the data set }} "
+                f"\\{{{_values_latex(values)}\\}}."
+            )
+            return (
+                prompt,
+                "create a dot plot",
+                r"\text{(dot plot of the data)}" if include_answer else None,
+            )
+        mode = _dot_plot_task_mode(settings)
         self._last_chart = ChartSpec(
             chart_type="dot_plot", title="Dot plot", x_label="Value", y_label="Frequency"
         )
-        include_answer = bool(settings.get("include_answer_key", False))
         data_line = f"\\text{{Data: }} \\{{{_values_latex(values)}\\}}"
 
         if mode == "total":
@@ -623,6 +658,30 @@ class HistogramReadFramework(StatisticsFramework):
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         params = continuous_statistics_params(settings)
         values = _generate_data_set(settings, params=params)
+        if form_slot(settings, 3) == 1:
+            self._last_values = values
+            self._last_chart = None
+            same = list(values)
+            random.shuffle(same)
+            other = list(values)
+            bump = 2 if (not other or other[0] < 30) else -2
+            other[0] = other[0] + bump
+            if sorted(other) == sorted(values):
+                other[0] = other[0] + 1
+            pair = [
+                ("same", _values_latex(same)),
+                ("other", _values_latex(other)),
+            ]
+            random.shuffle(pair)
+            letters = ["(A)", "(B)"]
+            listed = " ".join(f"{letters[i]}\\ {pair[i][1]}" for i in range(2))
+            letter = letters[0 if pair[0][0] == "same" else 1]
+            include_answer = bool(settings.get("include_answer_key", False))
+            prompt = (
+                f"\\text{{Which list has the same dot plot as a histogram of }} "
+                f"\\{{{_values_latex(values)}\\}}\\text{{?}} {listed}"
+            )
+            return prompt, "match histogram to a dot plot", letter if include_answer else None
         d = _stats_continuous_d(settings)
         span = max(2, params.value_max - params.value_min)
         if d is None:
@@ -741,16 +800,42 @@ class BoxPlotBasicsFramework(StatisticsFramework):
             while len(values) < 8:
                 values.append(float(random_int_range(params.value_min, params.value_max)))
         summary = _five_number_summary(values)
-        question = _box_plot_task_mode(settings)
+        slot = form_slot(settings, 5)
+        # Slots 1 and 2 are the forms a short seeded set should show:
+        # read the maximum, and create the plot from the data table.
+        if slot == 1:
+            question = "max"
+        elif slot == 2:
+            question = "draw"
+        else:
+            question = _box_plot_task_mode(settings)
         self._last_values = values
-        self._last_chart = ChartSpec(
+        # A "create the box plot" item gives the table, not a finished plot.
+        self._last_chart = None if question == "draw" else ChartSpec(
             chart_type="box_plot",
             title="Box plot",
             x_label="Value",
             five_number_summary=summary,
         )
         include_answer = bool(settings.get("include_answer_key", False))
-        if question == "median":
+        if question == "draw":
+            listed = _values_latex(values)
+            answer = (
+                f"{_format_numeric_answer(summary['min'], integer_only=True)}, "
+                f"{_format_numeric_answer(summary['q1'], integer_only=True)}, "
+                f"{_format_numeric_answer(summary['median'], integer_only=True)}, "
+                f"{_format_numeric_answer(summary['q3'], integer_only=True)}, "
+                f"{_format_numeric_answer(summary['max'], integer_only=True)}"
+            ) if include_answer else None
+            prompt = (
+                f"\\text{{Create a box plot for the data set }} \\{{{listed}\\}}. "
+                f"\\text{{Give the five-number summary (min, Q1, median, Q3, max).}}"
+            )
+            return prompt, "create a box plot", answer
+        if question == "max":
+            result = summary["max"]
+            label = "maximum"
+        elif question == "median":
             result = summary["median"]
             label = "median"
         elif question == "iqr":

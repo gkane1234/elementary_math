@@ -663,12 +663,32 @@ def write_one_step_equation(topic: str, settings: dict) -> list[Question]:
         )
         if other:
             return _other_relationship_prompt(d, keyed)
-        return _constant_rate_prompt(d, keyed)
+        return _constant_rate_prompt(d, keyed, settings)
 
-    return _make_questions(topic, count, keyed, build)
+    return _make_questions(topic, count, keyed, build, settings=settings)
 
 
-def _constant_rate_prompt(d: float, keyed: bool) -> tuple[str, str, str | None]:
+def _constant_rate_prompt(
+    d: float, keyed: bool, settings: dict | None = None
+) -> tuple[str, str, str | None]:
+    from question_engine.frameworks.form_mix import form_slot
+
+    if settings is not None and form_slot(settings, 3) == 1:
+        rate = random.randint(2, 6) if d < 8 else random.randint(4, 12)
+        hours = (1, 2, 3) if d < 12 else (2, 4, 6)
+        # The student fills the distance row. The first cell is worked as a check.
+        known_h = hours[0]
+        blanks = ", ".join(
+            str(rate * h) if h == known_h else r"\text{?}" for h in hours
+        )
+        times = ", ".join(str(h) for h in hours)
+        prompt = (
+            rf"\text{{A car travels at a constant speed of }} {rate}"
+            rf"\text{{ miles per hour. Complete the distances for }} {times}"
+            rf"\text{{ hours: }} {blanks}."
+        )
+        answer = ", ".join(str(rate * h) for h in hours)
+        return prompt, "constant-rate table", answer if keyed else None
     if d < 5:
         rate = random.randint(2, 8)
         hours = random.randint(2, 5)

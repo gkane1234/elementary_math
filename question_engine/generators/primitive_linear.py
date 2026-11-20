@@ -443,8 +443,18 @@ def more_on_slope(topic: str, settings: dict) -> list[Question]:
     last: dict[str, Any] = {"meta": {}}
 
     def build() -> tuple[str, str, str | None]:
+        from question_engine.frameworks.form_mix import form_slot
+
+        local = dict(settings)
+        already = str(local.get("more_on_slope_mode") or "").strip()
+        if not already and form_slot(settings, 3) == 2:
+            prereq = dict(local.get("prereq_settings") or {})
+            eq = dict(prereq.get(PRIM_EQUATIONS) or {})
+            eq["more_on_slope_mode"] = "two_points"
+            prereq[PRIM_EQUATIONS] = eq
+            local["prereq_settings"] = prereq
         ctx = build_context(
-            settings,
+            local,
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_EQUATIONS],
             policy=LINEAR_POLICY,
             leaf_id="more_on_slope",

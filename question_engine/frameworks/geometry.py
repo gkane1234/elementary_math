@@ -899,7 +899,12 @@ class TriangleAreaFramework(GeometryFramework):
                 missing_p = 0.75
             else:
                 missing_p = 0.92
-        find_missing = understanding and random.random() < missing_p
+        from question_engine.frameworks.form_mix import form_slot
+
+        if understanding and settings.get("seed") is not None:
+            find_missing = form_slot(settings, 2) == 1
+        else:
+            find_missing = understanding and random.random() < missing_p
 
         fig = triangle_base_height_figure(
             float(base),

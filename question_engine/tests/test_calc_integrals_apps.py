@@ -29,7 +29,7 @@ def _gen(type_id: str, d: float, *, seed: int = 101, count: int = 1):
 def test_related_rates_d0_circle_only():
     a0 = calc_application_structure_from_continuous({"difficulty": 0})
     assert a0 is not None
-    assert a0["related_frames"] == ("expanding_circle",)
+    assert a0["related_frames"] == ("expanding_circle", "y_of_x")
     frames = set()
     for seed in range(20):
         q = _gen("calc_app_diff_related_rates", 0, seed=seed)[0]
@@ -37,18 +37,22 @@ def test_related_rates_d0_circle_only():
             "related_rates_frame"
         )
         frames.add(fid)
-        assert "circle" in (q.prompt_latex or "").lower() or fid == "expanding_circle"
-    assert frames == {"expanding_circle"}
+        assert (
+            "circle" in (q.prompt_latex or "").lower()
+            or fid in {"expanding_circle", "y_of_x"}
+        )
+    assert "expanding_circle" in frames
+    assert "y_of_x" in frames
 
 
 def test_related_rates_easy_leftovers_lock_out():
     """Circle/sphere leftovers drop after medium (PFD-style d_max)."""
-    assert related_frames_for_difficulty(0) == ("expanding_circle",)
+    assert related_frames_for_difficulty(0) == ("expanding_circle", "y_of_x")
     med = related_frames_for_difficulty(8)
-    assert "expanding_circle" in med and "balloon_radius" in med
+    assert "expanding_circle" in med and "balloon_radius" in med and "y_of_x" in med
     hard = related_frames_for_difficulty(12)
     assert "expanding_circle" not in hard and "expanding_sphere" not in hard
-    assert set(hard) == {"balloon_radius", "cone_similar", "sliding_ladder"}
+    assert set(hard) == {"balloon_radius", "cone_similar", "sliding_ladder", "y_of_x"}
     vh = related_frames_for_difficulty(16)
     assert "balloon_radius" not in vh and "expanding_circle" not in vh
     assert "cone_drain" in vh and "sliding_ladder" in vh
@@ -124,7 +128,7 @@ def test_ftc1_d0_easy_high_d_sqrt_sin_lockout():
 
     q0 = _gen("calc_def_int_first_fundamental_theorem_of_calculus", 0, seed=101)[0]
     fid0 = (q0.metadata or {}).get("form_id")
-    assert fid0 in {"ftc1_linear", "ftc1_quad"}
+    assert fid0 in {"ftc1_linear", "ftc1_quad", "ftc1_at_point", "ftc1_deriv"}
     assert (q0.metadata or {}).get("generator") == "first_fundamental_theorem"
     assert r"\sqrt" not in (q0.prompt_latex or "")
     assert r"\sin" not in (q0.prompt_latex or "")
@@ -145,7 +149,13 @@ def test_ftc1_d0_easy_high_d_sqrt_sin_lockout():
     assert "ftc1_linear" in mid
     assert "ftc1_quad" in mid
     assert "ftc1_quad_const" in mid
-    assert mid <= {"ftc1_linear", "ftc1_quad", "ftc1_quad_const"}
+    assert mid <= {
+        "ftc1_linear",
+        "ftc1_quad",
+        "ftc1_quad_const",
+        "ftc1_at_point",
+        "ftc1_deriv",
+    }
 
     high = set()
     for seed in range(36):
@@ -158,7 +168,13 @@ def test_ftc1_d0_easy_high_d_sqrt_sin_lockout():
         p = q.prompt_latex or ""
         assert r"} x\,d" not in p
         assert (q.metadata or {}).get("generator") == "first_fundamental_theorem"
-    assert high <= {"ftc1_quad_const", "ftc1_sqrt", "ftc1_sin"}
+    assert high <= {
+        "ftc1_quad_const",
+        "ftc1_sqrt",
+        "ftc1_sin",
+        "ftc1_at_point",
+        "ftc1_deriv",
+    }
     assert "ftc1_quad_const" in high
     assert high & {"ftc1_sqrt", "ftc1_sin"}
 
@@ -169,7 +185,7 @@ def test_ftc1_d0_easy_high_d_sqrt_sin_lockout():
         )[0]
         fid = (q.metadata or {}).get("form_id")
         expert.add(fid)
-        assert fid in {"ftc1_sqrt", "ftc1_sin"}
+        assert fid in {"ftc1_sqrt", "ftc1_sin", "ftc1_at_point", "ftc1_deriv"}
         p = q.prompt_latex or ""
         assert r"} x\,d" not in p
         assert r"x^{2}" not in p
@@ -177,7 +193,8 @@ def test_ftc1_d0_easy_high_d_sqrt_sin_lockout():
         snap = (q.metadata or {}).get("spec_snapshot") or {}
         assert snap.get("form_id") == fid
         assert snap.get("generator") == "first_fundamental_theorem"
-    assert expert == {"ftc1_sqrt", "ftc1_sin"}
+    assert {"ftc1_sqrt", "ftc1_sin"} <= expert
+    assert expert <= {"ftc1_sqrt", "ftc1_sin", "ftc1_at_point", "ftc1_deriv"}
 
 
 def test_ftc1_quality_weights_tilt():
@@ -211,9 +228,12 @@ def test_ftc1_quality_weights_tilt():
 
 def test_ftc2_is_derivative_of_integral():
     q = _gen("calc_def_int_second_fundamental_theorem_of_calculus", 0, seed=101)[0]
-    assert r"\frac{d}" in (q.prompt_latex or "")
-    assert r"\int_" in (q.prompt_latex or "")
+    prompt = q.prompt_latex or ""
+    assert r"\int" in prompt
     assert q.answer_latex
+    fid = (q.metadata or {}).get("form_id")
+    if fid == "ftc2_poly":
+        assert r"\frac{d}" in prompt
 
 
 def test_ftc2_d0_poly_high_d_chain_lockout():
@@ -230,12 +250,14 @@ def test_ftc2_d0_poly_high_d_chain_lockout():
     assert ftc2_forms_for_difficulty(22) == ("ftc2_chain",)
 
     q0 = _gen("calc_def_int_second_fundamental_theorem_of_calculus", 0, seed=101)[0]
-    assert (q0.metadata or {}).get("form_id") == "ftc2_poly"
+    fid0 = (q0.metadata or {}).get("form_id")
+    assert fid0 in {"ftc2_poly", "ftc2_at_point", "ftc2_integrate"}
     assert (q0.metadata or {}).get("generator") == "second_fundamental_theorem"
-    assert r"t^{2}" in (q0.prompt_latex or "")
-    assert r"\sin" not in (q0.prompt_latex or "")
+    if fid0 == "ftc2_poly":
+        assert r"t^{2}" in (q0.prompt_latex or "")
+        assert r"\sin" not in (q0.prompt_latex or "")
     snap = (q0.metadata or {}).get("spec_snapshot") or {}
-    assert snap.get("form_id") == "ftc2_poly"
+    assert snap.get("form_id") == fid0
     assert snap.get("generator") == "second_fundamental_theorem"
 
     mid = set()
@@ -250,7 +272,7 @@ def test_ftc2_d0_poly_high_d_chain_lockout():
         assert r"e^{" not in p
     assert "ftc2_poly" in mid
     assert "ftc2_trig" in mid
-    assert mid <= {"ftc2_poly", "ftc2_trig"}
+    assert mid <= {"ftc2_poly", "ftc2_trig", "ftc2_at_point", "ftc2_integrate"}
 
     high = set()
     for seed in range(30):
@@ -261,9 +283,10 @@ def test_ftc2_d0_poly_high_d_chain_lockout():
         high.add(fid)
         assert fid != "ftc2_poly"
         p = q.prompt_latex or ""
-        assert r"t^{2}" not in p
+        if fid in {"ftc2_trig", "ftc2_chain"}:
+            assert r"t^{2}" not in p
         assert (q.metadata or {}).get("generator") == "second_fundamental_theorem"
-    assert high <= {"ftc2_trig", "ftc2_chain"}
+    assert high <= {"ftc2_trig", "ftc2_chain", "ftc2_at_point", "ftc2_integrate"}
     assert "ftc2_trig" in high
     assert "ftc2_chain" in high
 
@@ -274,16 +297,18 @@ def test_ftc2_d0_poly_high_d_chain_lockout():
         )[0]
         fid = (q.metadata or {}).get("form_id")
         expert.add(fid)
-        assert fid == "ftc2_chain"
+        assert fid in {"ftc2_chain", "ftc2_at_point", "ftc2_integrate"}
         p = q.prompt_latex or ""
         assert r"t^{2}" not in p
-        assert r"\sin" not in p
-        assert r"e^{" in p
+        if fid == "ftc2_chain":
+            assert r"\sin" not in p
+            assert r"e^{" in p
         assert (q.metadata or {}).get("generator") == "second_fundamental_theorem"
         snap = (q.metadata or {}).get("spec_snapshot") or {}
-        assert snap.get("form_id") == "ftc2_chain"
+        assert snap.get("form_id") == fid
         assert snap.get("generator") == "second_fundamental_theorem"
-    assert expert == {"ftc2_chain"}
+    assert "ftc2_chain" in expert
+    assert expert <= {"ftc2_chain", "ftc2_at_point", "ftc2_integrate"}
 
 
 def test_ftc2_quality_weights_tilt():
@@ -3671,7 +3696,12 @@ def test_related_rates_stamps_form_id_generator_and_two_seeds_differ():
         qq = _gen(tid, 8, seed=seed)[0]
         seen.add(str((qq.metadata or {}).get("form_id") or ""))
     assert len(seen) >= 2, seen
-    assert seen <= {"expanding_circle", "expanding_sphere", "balloon_radius"}
+    assert seen <= {
+        "expanding_circle",
+        "expanding_sphere",
+        "balloon_radius",
+        "y_of_x",
+    }
 
 
 def test_related_rates_quality_weights_tilt_frame_mix():

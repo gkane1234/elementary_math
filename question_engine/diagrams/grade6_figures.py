@@ -296,22 +296,179 @@ def tape_svg(
     )
 
 
-def hanger_svg(parts: int, total: int, *, inequality: bool = False) -> str:
-    _ = inequality  # API parity with tape_svg; prompt carries = / ≤
-    left = 50
-    blocks = "".join(
-        f'<rect x="{left + i * 32}" y="105" width="28" height="28" rx="3" fill="#bfdbfe" stroke="#1e3a8a"/>'
-        for i in range(parts)
+def _hanger_num(value: float) -> str:
+    rounded = round(float(value), 1)
+    if abs(rounded - round(rounded)) < 1e-9:
+        return str(int(round(rounded)))
+    return f"{rounded:.1f}"
+
+
+def _hanger_label(total: int | float) -> str:
+    if isinstance(total, float) and total.is_integer():
+        return str(int(total))
+    return str(total)
+
+
+def _hanger_tilt_degrees(inequality: bool, relation: str) -> float:
+    """Degrees from level. Positive lowers the right side (SVG y grows downward).
+
+    A greater side hangs lower, matching an unbalanced mobile. ``\\ge`` / ``>``
+    lower the left (the ``x`` chain). ``\\le`` / ``<`` lower the right (the
+    total). Equations stay level. An inequality with no parsed relation uses
+    the same tilt as ``\\le``.
+    """
+    rel = (relation or "").replace(" ", "")
+    bare = rel.replace("\\", "").lower()
+    greater_left = "≥" in rel or ">=" in rel or bare in {">", "gt"} or (
+        "ge" in bare and "le" not in bare
     )
-    return _svg(
-        f'<line x1="170" y1="25" x2="170" y2="55" stroke="#374151" stroke-width="3"/>'
-        f'<line x1="45" y1="55" x2="295" y2="55" stroke="#374151" stroke-width="3"/>'
-        f'<line x1="70" y1="55" x2="70" y2="105" stroke="#374151" stroke-width="2"/>'
-        f'<line x1="270" y1="55" x2="270" y2="105" stroke="#374151" stroke-width="2"/>'
-        f'{blocks}<text x="75" y="153" font-size="17">x blocks</text>'
-        f'<text x="250" y="120" font-size="22">{total}</text>',
-        height=180,
+    greater_right = "≤" in rel or "<=" in rel or bare in {"<", "lt"} or (
+        "le" in bare and "ge" not in bare
     )
+    if greater_left and not greater_right:
+        return -12.0
+    if greater_right and not greater_left:
+        return 12.0
+    if inequality:
+        return 12.0
+    return 0.0
+
+
+def hanger_svg(
+    parts: int,
+    total: int,
+    *,
+    inequality: bool = False,
+    relation: str = "=",
+) -> str:
+    """Balance hanger for ``parts * x ? total``.
+
+    Left side: a vertical chain of green squares, one per ``x``, each labeled
+    ``x``. Right side: one magenta rectangle labeled with the total. A hook
+    supports the middle of the beam, and strings drop straight down to the
+    weights. Equations are level. Inequalities tilt so the greater side is lower.
+    """
+    count = max(1, int(parts))
+    raw_label = _hanger_label(total)
+    label = escape(raw_label)
+    if count <= 4:
+        side, gap = 36.0, 10.0
+    elif count <= 6:
+        side, gap = 32.0, 8.0
+    else:
+        side, gap = 28.0, 6.0
+    digits = max(1, len(raw_label))
+    rect_w = max(side * 1.45, 11.0 * digits + 20.0)
+    # Keep the known weight a tall rectangle, including 3-digit totals.
+    rect_h = max(side * 2.05, rect_w * 1.4, 54.0)
+    # Clear horizontal room between the two columns, as on a classroom mobile.
+    inner_gap = 64.0
+    half = inner_gap / 2 + side / 4 + rect_w / 4
+    tilt = _hanger_tilt_degrees(inequality, relation)
+    theta = math.radians(tilt)
+    cos_t, sin_t = math.cos(theta), math.sin(theta)
+    string_len = 18.0
+    hook_len = 20.0
+
+    def beam_point(dx: float) -> tuple[float, float]:
+        return (dx * cos_t, dx * sin_t)
+
+    left_x, left_y = beam_point(-half)
+    right_x, right_y = beam_point(half)
+    beam_left = beam_point(-(half + 2.0))
+    beam_right = beam_point(half + 2.0)
+
+    squares: list[tuple[float, float]] = []
+    top = left_y + string_len
+    for _ in range(count):
+        squares.append((left_x - side / 2, top))
+        top += side + gap
+    rect = (right_x - rect_w / 2, right_y + string_len, rect_w, rect_h)
+
+    xs = [
+        beam_left[0],
+        beam_right[0],
+        left_x - side / 2,
+        left_x + side / 2,
+        rect[0],
+        rect[0] + rect_w,
+        0.0,
+    ]
+    ys = [
+        -hook_len,
+        beam_left[1],
+        beam_right[1],
+        left_y,
+        right_y,
+        squares[-1][1] + side,
+        rect[1] + rect_h,
+        0.0,
+    ]
+    pad = 16.0
+    min_x, max_x = min(xs) - pad, max(xs) + pad
+    min_y, max_y = min(ys) - pad, max(ys) + pad
+    width = max(1, math.ceil(max_x - min_x))
+    height = max(1, math.ceil(max_y - min_y))
+
+    def nx(x: float) -> float:
+        return x - min_x
+
+    def ny(y: float) -> float:
+        return y - min_y
+
+    def n(value: float) -> str:
+        return _hanger_num(value)
+
+    x_font = max(14, int(round(side * 0.5)))
+    num_font = 20 if digits <= 2 else 16
+    if tilt < 0:
+        tilt_note = ", left side lower"
+    elif tilt > 0:
+        tilt_note = ", right side lower"
+    else:
+        tilt_note = ""
+    title = escape(f"{count} squares labeled x on the left, {raw_label} on the right{tilt_note}")
+
+    def weight(kind: str, x: float, y: float, w: float, h: float, text: str, fill: str, font: int) -> str:
+        return (
+            f'<g class="hanger-weight">'
+            f'<rect data-kind="{kind}" x="{n(nx(x))}" y="{n(ny(y))}" width="{n(w)}" height="{n(h)}" '
+            f'fill="{fill}" stroke="#111" stroke-width="2"/>'
+            f'<text data-kind="{kind}" x="{n(nx(x + w / 2))}" y="{n(ny(y + h / 2))}" '
+            f'text-anchor="middle" dominant-baseline="middle" '
+            f'font-family="DejaVu Sans, Liberation Sans, sans-serif" '
+            f'font-size="{font}" fill="#111">{text}</text></g>'
+        )
+
+    chunks: list[str] = [f"<title>{title}</title>"]
+    chunks.append(
+        f'<line class="hanger-hook" x1="{n(nx(0))}" y1="{n(ny(-hook_len))}" '
+        f'x2="{n(nx(0))}" y2="{n(ny(0))}" stroke="#111" stroke-width="2.5" stroke-linecap="square"/>'
+    )
+    chunks.append(
+        f'<line class="hanger-beam" x1="{n(nx(beam_left[0]))}" y1="{n(ny(beam_left[1]))}" '
+        f'x2="{n(nx(beam_right[0]))}" y2="{n(ny(beam_right[1]))}" '
+        f'stroke="#111" stroke-width="2.5" stroke-linecap="square"/>'
+    )
+    chunks.append(
+        f'<line class="hanger-string" data-side="left" x1="{n(nx(left_x))}" y1="{n(ny(left_y))}" '
+        f'x2="{n(nx(left_x))}" y2="{n(ny(squares[0][1]))}" stroke="#111" stroke-width="1.75"/>'
+    )
+    chunks.append(
+        f'<line class="hanger-string" data-side="right" x1="{n(nx(right_x))}" y1="{n(ny(right_y))}" '
+        f'x2="{n(nx(right_x))}" y2="{n(ny(rect[1]))}" stroke="#111" stroke-width="1.75"/>'
+    )
+    for i in range(count - 1):
+        sy = squares[i][1]
+        nxt = squares[i + 1][1]
+        chunks.append(
+            f'<line class="hanger-link" x1="{n(nx(left_x))}" y1="{n(ny(sy + side))}" '
+            f'x2="{n(nx(left_x))}" y2="{n(ny(nxt))}" stroke="#111" stroke-width="1.75"/>'
+        )
+    for sx, sy in squares:
+        chunks.append(weight("x", sx, sy, side, side, "x", "#9BE15A", x_font))
+    chunks.append(weight("total", rect[0], rect[1], rect_w, rect_h, label, "#F062D8", num_font))
+    return _svg("".join(chunks), width=width, height=height)
 
 
 def grid_polygon_svg(points: list[tuple[int, int]], *, shaded: bool = False) -> str:

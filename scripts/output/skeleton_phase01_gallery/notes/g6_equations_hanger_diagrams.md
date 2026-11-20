@@ -10,6 +10,8 @@ Steps 1–3 only (old live samples, intended look, OpenStax). No engine implemen
 
 **D=0:** balanced hanger for `nx = k` with tiny `n` (2 or 3) and `k` a multiple. “Use the diagram to solve `3x=15`.”
 
+**Figure:** level beam with a center hook. Left side is a vertical chain of green squares, one per `x`, each labeled `x`. Right side is one rectangle labeled with the total. Strings drop from the ends of the beam.
+
 **High D (intended):** still one-step multiplication; maybe `x+a=b` hangers (circles vs squares). Old path only scales `n` and `k` (`9x=153`).
 
 ## What old path actually produced
@@ -45,6 +47,7 @@ G6 gold: **IM Grade 6 Unit 6** hangers (balanced mobile: circles = squares).
 - Flags: **UNCLEAR**, **LOW_VARIETY**.
 - **LOW_VARIETY:** 8/8 samples are `Use the diagram to solve nx = k`. No addition hangers, no both-sides, no inequality mix (that is a sibling leaf).
 - Weak / missing OpenStax chapter match for this leaf.
+- The figure is a two-column hanger for `nx = k` only. It does not draw both-sides sums, sub-hangers, shape legends, or crossed-out solution steps.
 
 ## Proposed engine (proposal only)
 
